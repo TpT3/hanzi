@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap');
+
+* {
+    font-family: 'Jost', sans-serif;
+}
+
+@keyframes bganim {
+    0% {
+        background-color: #7651b2;
+    }
+    100% {
+        background-color: #a251b2;
+    }
+}
+
+html {
+    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0), rgba(33, 4, 79, 1));
+    animation: bganim 5s infinite alternate linear;
+}
+
+body {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+}
+
+#answer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+input {
+    font-size: xx-large;
+    border-style: none;
+    border-radius: 7px;
+}
+
+#text {
+    width: 130px;
+    margin-right: 5px;
+}
+
+#button {
+    background-color: #46ff8a;
+}

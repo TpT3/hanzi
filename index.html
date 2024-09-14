@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практика китайского</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="content">
+        <h1 id="question">Произношение 车</h1>
+        <div id="answer">
+            <input type="text" id="text">
+            <input type="button" value=" ✓ " id="button">
+        </div>
+        <p id="streak">Правильных ответов - 0</p>
+    </div>
+
+    <script type="text/javascript" src="data.js"></script>
+    <script>
+        var hanzi = JSON.parse(data)
+        
+        const question = document.getElementById("question");
+        const text = document.getElementById("text");
+        const button = document.getElementById("button");
+        const streak = document.getElementById("streak");
+
+        let symbol = '';
+        let spell = '';
+        let streakVal = 0;
+
+        const TTS = new SpeechSynthesisUtterance();
+        TTS.lang = 'zh-CN';
+
+        function shuffle(array) {
+            let currentIndex = array.length;
+            while (currentIndex != 0) {
+
+                let randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+            }
+        }
+
+        function newSymbol() {
+            let element = hanzi[streakVal];
+
+            symbol = element[0]
+            spell = element[1]
+
+            question.innerHTML = `Произношение ${symbol}`
+        }
+
+        function answered() {
+            let answer = text.value;
+            text.value = '';
+
+            if (answer == spell) {
+                streakVal++;
+            } else {
+                TTS.text = symbol;
+                window.speechSynthesis.speak(TTS);
+                alert(`Правильный ответ для символа ${symbol} - ${spell}`)
+                streakVal = 0;
+            }
+
+            streak.innerHTML = `Правильных ответов - ${streakVal}`
+            newSymbol();
+        }
+
+        shuffle(hanzi)
+        newSymbol()
+        button.onclick = answered
+        text.addEventListener("keypress", () => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                answered()
+            }
+        })
+    </script>
+</body>
+</html>
